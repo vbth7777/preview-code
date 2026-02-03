@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './index.css';
 import FileTree from './components/FileTree';
 import CodeViewer from './components/CodeViewer';
-import { Play, Bug, Save, Settings, Search, File } from 'lucide-react';
+import { Play, Bug, Save, Settings, Search, File, Menu } from 'lucide-react';
 
 // Use relative path for Vercel, or localhost for dev if needed.
 // Since we serve frontend separately in dev, we might need a proxy or keep using localhost:4000.
@@ -16,6 +16,7 @@ function App() {
   const [openFiles, setOpenFiles] = useState([]); // Array of { path, name, content, language }
   const [activeFilePath, setActiveFilePath] = useState(null);
   const [error, setError] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
   const ws = useRef(null);
 
   // Fetch Tree
@@ -117,6 +118,7 @@ function App() {
 
     setOpenFiles([...openFiles, newFile]);
     setActiveFilePath(node.path);
+    if (window.innerWidth <= 768) setIsSidebarOpen(false);
   };
 
   const handleCloseTab = (e, path) => {
@@ -151,6 +153,9 @@ function App() {
 
       {/* Toolbar */}
       <div className="nb-toolbar">
+        <div className="mobile-menu-btn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+          <Menu size={16} color="#555" />
+        </div>
         <File size={16} color="#555" />
         <Save size={16} color="#555" />
         <div style={{ width: 10 }}></div>
@@ -161,8 +166,13 @@ function App() {
       </div>
 
       <div className="nb-main">
+        {/* Mobile Toggle Overlay */}
+        {isSidebarOpen && window.innerWidth <= 768 && (
+          <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>
+        )}
+
         {/* Sidebar */}
-        <div className="nb-sidebar">
+        <div className={`nb-sidebar ${isSidebarOpen ? 'open' : ''}`}>
           <div className="nb-sidebar-header">Projects</div>
           <div className="nb-tree">
             {fileTree ? (
