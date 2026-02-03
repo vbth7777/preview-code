@@ -10,11 +10,24 @@ app.use(express.json());
 // Vercel serverless environment:
 // Files are usually at the root or referenced relatively.
 // We copied 'project_data/SchoolManagementSystem' to the root of the repo (or project_data folder).
-const TARGET_DIR = path.join(process.cwd(), 'project_data', 'SchoolManagementSystem');
+// Use __dirname to be relative to the file location
+const TARGET_DIR = path.join(__dirname, '..', 'project_data', 'SchoolManagementSystem');
 
 // Helper to get file tree
 const getFileTree = (dir) => {
-    if (!fs.existsSync(dir)) return { name: 'Error', type: 'file' }; // Safety
+    if (!fs.existsSync(dir)) {
+        // Return debug info
+        return {
+            name: 'Error',
+            type: 'file',
+            debug: {
+                checkedPath: dir,
+                cwd: process.cwd(),
+                dirname: __dirname,
+                lsRoot: fs.existsSync(path.join(__dirname, '..')) ? fs.readdirSync(path.join(__dirname, '..')) : 'parent not found'
+            }
+        };
+    }
 
     const stats = fs.statSync(dir);
     if (!stats.isDirectory()) {
