@@ -1,0 +1,15 @@
+# NetbeansViewer
+NetbeansViewer/node_modules
+NetbeansViewer/dist
+NetbeansViewer/build
+NetbeansViewer/.env
+NetbeansViewer/.env.local
+
+# SchoolManagementSystem
+SchoolManagementSystem/build
+SchoolManagementSystem/dist
+SchoolManagementSystem/nbproject/private
+
+# System
+.DS_Store
+Thumbs.db
