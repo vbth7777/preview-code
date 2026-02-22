@@ -10,7 +10,7 @@ app.use(express.json());
 
 // 1. Simulate Bundle Location
 // In Vercel, we copied to project_data. locally it's in NetbeansViewer/project_data
-const TARGET_DIR = path.resolve(__dirname, '../project_data/SchoolManagementSystem');
+const TARGET_DIR = path.resolve(__dirname, '../project_data');
 console.log(`Target Dir: ${TARGET_DIR}`);
 
 if (!fs.existsSync(TARGET_DIR)) {
@@ -43,7 +43,7 @@ app.get('/api/files', (req, res) => {
 app.get('/api/file', (req, res) => {
     const filePath = req.query.path;
     // Simple validation
-    if (!filePath || !filePath.includes('SchoolManagementSystem')) {
+    if (!filePath || !filePath.includes('project_data')) {
         return res.status(400).json({ error: 'Invalid file path' });
     }
     try {

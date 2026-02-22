@@ -11,7 +11,7 @@ app.use(express.json());
 // Files are usually at the root or referenced relatively.
 // We copied 'project_data/SchoolManagementSystem' to the root of the repo (or project_data folder).
 // Use __dirname to be relative to the file location
-const TARGET_DIR = path.join(__dirname, '..', 'project_data', 'SchoolManagementSystem');
+const TARGET_DIR = path.join(__dirname, '..', 'project_data');
 
 // Helper to get file tree
 const getFileTree = (dir) => {
